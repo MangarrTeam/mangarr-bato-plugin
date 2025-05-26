@@ -62,24 +62,24 @@ class TemplatePlugin(MangaPluginBase):
             if len(last_div) == 0:
                 continue
 
-            name = last_div.xpath(f"//h3[@data-hk='0-0-3-{id}-2-0']//span")
-            if len(name) == 0:
-                continue
-            
             first_child = first_div[0]
             href = first_child.get("href", "")
             img = first_child.find("img") if hasattr(first_child, 'find') else None
             img_src = img.get("src", "") if img is not None else NO_THUMBNAIL_URL
             if href:
-                found_mangas.append((name[0].text, f"{self.base_url}{href}", img_src))
+                found_mangas.append((f"{self.base_url}{href}", img_src))
 
         mangaData = []
 
-        for name, url, cover in found_mangas:
+        for url, cover in found_mangas:
             manga_dict = self.search_manga_dict()
-            manga_dict["name"] = name
             manga_dict["url"] = url
             manga_dict["cover"] = cover
+
+            name = self.get_manga(manga_dict).get("name")
+            if name is None or len(name) == 0:
+                continue
+            manga_dict["name"] = name
             mangaData.append(manga_dict)
 
 
