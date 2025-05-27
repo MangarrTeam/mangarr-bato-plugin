@@ -8,7 +8,7 @@ import re
 import logging
 logger = logging.getLogger(__name__)
 
-class TemplatePlugin(MangaPluginBase):
+class BatoPlugin(MangaPluginBase):
     languages = ["en"]
     base_url = "https://bato.to"
 
