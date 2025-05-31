@@ -187,10 +187,10 @@ class BatoPlugin(MangaPluginBase):
         number_rex = re.compile(r"/title/.+/([0-9]+)(?:-vol_([0-9]+))?-ch_([0-9.]+)")
 
         chapters = []
-        for id, chapterInfo in enumerate(chapterList.xpath("./div")):
+        for chapterInfo in chapterList.xpath("./div"):
             infoNode = chapterInfo[0][0]
             chapterUrl = infoNode.get("href", "")
-            releaseNode = chapterInfo.xpath(f"//time[@data-hk='0-0-{id}-5-0']")
+            releaseNode = chapterInfo.xpath(f".//time")
             releaseDate = releaseNode[0].get("time")
 
             match = number_rex.match(chapterUrl)
